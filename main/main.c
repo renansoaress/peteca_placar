@@ -8,7 +8,7 @@
 #define RMT_LED_STRIP_RESOLUTION_HZ 10000000 // 10MHz resolution, 1 tick = 0.1us (led strip needs a high resolution)
 #define RMT_LED_STRIP_GPIO_NUM 13
 
-#define LED_NUMBERS 10
+#define LED_NUMBERS 15
 #define CHASE_SPEED_MS 100
 
 static const char *TAG = "PETECA";
