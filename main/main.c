@@ -237,6 +237,7 @@ static void debounce_btn_team_task(int BTN_GPIO)
                                 {
                                     if (set_final_blue_team && scoreboard_team_1 == 1)
                                     {
+                                        // vai a 2
                                         scoreboard_team_1 = 0;
                                         scoreboard_team_2 = 0;
                                         display_number(&led_team_1, scoreboard_team_2, COLOR_RED);
@@ -246,7 +247,15 @@ static void debounce_btn_team_task(int BTN_GPIO)
                                     {
                                         scoreboard_team_2++;
                                         display_number(&led_team_1, scoreboard_team_2, COLOR_RED);
-                                        if (scoreboard_team_2 > 1)
+                                        if (set_final_blue_team && scoreboard_team_1 == 1)
+                                        {
+                                            // vai a 2
+                                            scoreboard_team_1 = 0;
+                                            scoreboard_team_2 = 0;
+                                            display_number(&led_team_1, scoreboard_team_2, COLOR_RED);
+                                            display_number(&led_team_2, scoreboard_team_1, COLOR_BLUE);
+                                        }
+                                        else if (!set_final_blue_team || (scoreboard_team_1 == 0 && scoreboard_team_2 == 2))
                                         {
                                             // GG
                                             last_level = level;
@@ -266,9 +275,11 @@ static void debounce_btn_team_task(int BTN_GPIO)
                                         {
                                             set_final_red_team = true;
                                             led(&led_team_1, LED_SET_GAME, COLOR_WHITE);
-                                            if (set_final_blue_team && scoreboard_team_1 == 1)
+                                            if (set_final_blue_team)
                                             {
                                                 scoreboard_team_1 = 0;
+                                                scoreboard_team_2 = 0;
+                                                display_number(&led_team_1, scoreboard_team_2, COLOR_RED);
                                                 display_number(&led_team_2, scoreboard_team_1, COLOR_BLUE);
                                             }
                                         }
@@ -326,7 +337,14 @@ static void debounce_btn_team_task(int BTN_GPIO)
                                     {
                                         scoreboard_team_1++;
                                         display_number(&led_team_2, scoreboard_team_1, COLOR_BLUE);
-                                        if (scoreboard_team_1 > 1)
+                                        if (set_final_red_team && scoreboard_team_2 == 1)
+                                        {
+                                            scoreboard_team_1 = 0;
+                                            scoreboard_team_2 = 0;
+                                            display_number(&led_team_1, scoreboard_team_2, COLOR_RED);
+                                            display_number(&led_team_2, scoreboard_team_1, COLOR_BLUE);
+                                        }
+                                        else if (!set_final_red_team || (scoreboard_team_2 == 0 && scoreboard_team_1 == 2))
                                         {
                                             // GG
                                             last_level = level;
@@ -346,10 +364,12 @@ static void debounce_btn_team_task(int BTN_GPIO)
                                         {
                                             set_final_blue_team = true;
                                             led(&led_team_2, LED_SET_GAME, COLOR_WHITE);
-                                            if (set_final_red_team && scoreboard_team_2 == 1)
+                                            if (set_final_red_team)
                                             {
+                                                scoreboard_team_1 = 0;
                                                 scoreboard_team_2 = 0;
                                                 display_number(&led_team_1, scoreboard_team_2, COLOR_RED);
+                                                display_number(&led_team_2, scoreboard_team_1, COLOR_BLUE);
                                             }
                                         }
                                         else
